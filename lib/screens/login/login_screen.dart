@@ -19,6 +19,17 @@ class LoginScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Entrar"),
           centerTitle: true,
+          actions: <Widget>[
+            FlatButton(
+                onPressed: (){
+                  Navigator.of(context).pushReplacementNamed('/signup');
+                },
+                textColor: Colors.white,
+                child: const Text(
+                  'CRIAR CONTA',
+                  style: TextStyle(fontSize: 14),
+                ))
+          ],
         ),
         body: Center(
           child: Card(
@@ -90,13 +101,7 @@ class LoginScreen extends StatelessWidget {
                                   );
                                 },
                                 onSucess: (){
-                                  //TODO: FECHAR TELA DE LOGIN
-                                  scaffoldKey.currentState.showSnackBar(
-                                    SnackBar(
-                                      content: const Text("Sucesso!"),
-                                      backgroundColor: Colors.green,
-                                    ),
-                                  );
+                                  Navigator.of(context).pop();
                                 },
                               );
                             }
