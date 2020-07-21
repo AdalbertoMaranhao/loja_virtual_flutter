@@ -50,7 +50,7 @@ class ProductListTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'R\$ 19,90',
+                      'R\$ ${product.sizes.first.price.toString()}',
                       style: TextStyle(
                         fontSize: 15,
                         color: Theme.of(context).primaryColor,

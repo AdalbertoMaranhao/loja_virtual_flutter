@@ -4,7 +4,7 @@ import 'package:lojavirtual/models/product.dart';
 
 class ProductManager extends ChangeNotifier {
   ProductManager() {
-    _loadAllProucts();
+    _loadAllProducts();
   }
 
   final Firestore firestore = Firestore.instance;
@@ -33,7 +33,7 @@ class ProductManager extends ChangeNotifier {
     return filteredProducts;
   }
 
-  Future<void> _loadAllProucts() async {
+  Future<void> _loadAllProducts() async {
     final QuerySnapshot snapProduct =
         await firestore.collection('products').getDocuments();
 
