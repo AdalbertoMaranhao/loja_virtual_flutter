@@ -25,6 +25,25 @@ class ProductScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(product.name),
           centerTitle: true,
+          actions: <Widget>[
+            Consumer<UserManager>(
+              builder: (_, userManager, __){
+                if(userManager.adminEnabled){
+                  return IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: (){
+                      Navigator.of(context).pushReplacementNamed(
+                        '/edit',
+                        arguments: product,
+                      );
+                    },
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+          ],
         ),
         body: ListView(
           children: <Widget>[
@@ -64,7 +83,7 @@ class ProductScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'R\$ ${product.sizes.first.price.toStringAsFixed(2)}',
+                    'R\$ ${product.basePrice.toStringAsFixed(2)}',
                     style: TextStyle(
                       fontSize: 27,
                       fontWeight: FontWeight.bold,
@@ -90,7 +109,7 @@ class ProductScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 16, bottom: 8),
                     child: Text(
-                      'Descrição',
+                      'Tamanhos',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lojavirtual/common/custom_drawer/price_card.dart';
+import 'file:///C:/Users/limad/AndroidStudioProjects/loja_virtual/lib/common/price_card.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:provider/provider.dart';
 
