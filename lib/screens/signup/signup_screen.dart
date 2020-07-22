@@ -99,7 +99,7 @@ class SignUpScreen extends StatelessWidget {
                             if(user.password != user.confirmedPassword){
                               scaffoldKey.currentState.showSnackBar(
                                 SnackBar(
-                                  content: Text("Senhas não coiencidem!"),
+                                  content: const Text("Senhas não coiencidem!"),
                                   backgroundColor: Colors.red,
                                 ),
                               );

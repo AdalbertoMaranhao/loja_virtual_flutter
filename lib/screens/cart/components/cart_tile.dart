@@ -31,7 +31,7 @@ class CartTile extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         cartProduct.product.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 17.0,
                         ),

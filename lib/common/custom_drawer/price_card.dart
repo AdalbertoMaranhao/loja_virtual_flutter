@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class PriceCard extends StatelessWidget {
 
-  PriceCard({this.buttonText, this.onPressed});
+  const PriceCard({this.buttonText, this.onPressed});
 
   final String buttonText;
   final VoidCallback onPressed;

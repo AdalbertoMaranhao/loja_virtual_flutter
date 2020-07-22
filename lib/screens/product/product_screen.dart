@@ -54,7 +54,7 @@ class ProductScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 8),
+                    padding: const EdgeInsets.only(top: 8),
                     child: Text(
                       'A partir de',
                       style: TextStyle(
