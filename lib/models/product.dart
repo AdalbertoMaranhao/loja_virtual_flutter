@@ -37,6 +37,14 @@ class Product extends ChangeNotifier {
 
   List<dynamic> newImages;
 
+  bool _loading = false;
+  bool get loading => _loading;
+  set loading(bool value){
+    _loading = value;
+    notifyListeners();
+  }
+
+
   ItemSize _selectedSize;
 
   ItemSize get selectedSize => _selectedSize;
@@ -81,6 +89,8 @@ class Product extends ChangeNotifier {
   }
 
   Future<void> save() async {
+    loading = true;
+
     final Map<String, dynamic> data = {
       'name': name,
       'description': description,
@@ -121,6 +131,9 @@ class Product extends ChangeNotifier {
     }
 
     await firestoreRef.updateData({'images': updateImages});
+    images = updateImages;
+
+    loading = false;
   }
 
   Product clone() {
