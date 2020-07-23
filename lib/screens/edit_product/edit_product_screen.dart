@@ -6,9 +6,12 @@ import 'components/sizes_form.dart';
 
 class EditProductScreen extends StatelessWidget {
 
-  EditProductScreen(this.product);
+  EditProductScreen(Product p) :
+        editing = p != null,
+        product = p != null ? p.clone() : Product();
 
   final Product product;
+  final bool editing;
 
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
@@ -20,7 +23,7 @@ class EditProductScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Editar Anúncio'),
+        title: Text(editing ? 'Editar Produto' : 'Criar Produto'),
         centerTitle: true,
       ),
       body: Form(
@@ -48,6 +51,9 @@ class EditProductScreen extends StatelessWidget {
                         return 'Titulo muito curto';
                       }
                       return null;
+                    },
+                    onSaved: (name) {
+                      product.name = name;
                     },
                   ),
                   Padding(
@@ -94,16 +100,22 @@ class EditProductScreen extends StatelessWidget {
                       }
                       return null;
                     },
+                    onSaved: (desc) {
+                      product.description = desc;
+                    },
                   ),
                   SizesForm(product),
+                  const SizedBox(height: 20,),
                   SizedBox(
                     height: 44,
                     child: RaisedButton(
                       color: primaryColor,
+                      disabledColor: primaryColor.withAlpha(100),
                       textColor: Colors.white,
                       onPressed: (){
                         if(formkey.currentState.validate()){
-
+                          formkey.currentState.save();
+                          product.save();
                         }
                       },
                       child: const Text(

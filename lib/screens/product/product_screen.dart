@@ -33,7 +33,7 @@ class ProductScreen extends StatelessWidget {
                     icon: Icon(Icons.edit),
                     onPressed: (){
                       Navigator.of(context).pushReplacementNamed(
-                        '/edit',
+                        '/edit_product',
                         arguments: product,
                       );
                     },
