@@ -103,7 +103,7 @@ class ImagesForm extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 16, left: 16),
                 child: Text(
                   state.errorText,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.red,
                     fontSize: 12,
                   ),
