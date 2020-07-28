@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'file:///C:/Users/limad/AndroidStudioProjects/loja_virtual/lib/common/price_card.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
@@ -25,7 +26,7 @@ class CartScreen extends StatelessWidget {
               PriceCard(
                 buttonText: 'Continuar para Entrega',
                 onPressed: cartManager.isCartValid ? (){
-
+                  Navigator.of(context).pushNamed('address');
                 } : null,
               ),
             ],
