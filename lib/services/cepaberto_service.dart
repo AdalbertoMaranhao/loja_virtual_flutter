@@ -9,7 +9,7 @@ class CepAbertoService {
 
   Future<CepAbertoAddress> getAddresFromCep(String cep) async{
     final cleanCep = cep.replaceAll('.', '').replaceAll('-', '');
-    final endPoint = "https://www.cepaberto.com/api/v3/cep?cep=";
+    final endPoint = "https://www.cepaberto.com/api/v3/cep?cep=$cleanCep";
 
     final Dio dio = Dio();
 
