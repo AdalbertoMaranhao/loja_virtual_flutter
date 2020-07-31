@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lojavirtual/models/item_size.dart';
+import 'package:lojavirtual/models/order.dart';
 import 'package:lojavirtual/models/product.dart';
 
 class CartProduct extends ChangeNotifier{
@@ -21,6 +22,19 @@ class CartProduct extends ChangeNotifier{
             (doc) {
               product = Product.fromDocument(doc);
             }
+    );
+  }
+
+  CartProduct.fromMap(Map<String, dynamic> map){
+    productID = map['pid'] as String;
+    quantity = map['quantity'] as int;
+    size = map['size'] as String;
+    fixedPrice = map['fixedPrice'] as num;
+
+    firestore.document('products/$productID').get().then(
+        (doc) {
+          product = Product.fromDocument(doc);
+        }
     );
   }
 
@@ -88,5 +102,6 @@ class CartProduct extends ChangeNotifier{
     if(size == null) return false;
     return size.stock >= quantity;
   }
+
 
 }

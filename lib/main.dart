@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/admin_user_manager.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/home_manager.dart';
+import 'package:lojavirtual/models/order.dart';
+import 'package:lojavirtual/models/orders_manager.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
@@ -9,6 +11,7 @@ import 'package:lojavirtual/screens/address/address_screen.dart';
 import 'package:lojavirtual/screens/base/base_screen.dart';
 import 'package:lojavirtual/screens/cart/cart_screen.dart';
 import 'package:lojavirtual/screens/checkout/checkout_screen.dart';
+import 'package:lojavirtual/screens/confirmation/confirmation_screen.dart';
 import 'package:lojavirtual/screens/edit_product/edit_product_screen.dart';
 import 'package:lojavirtual/screens/login/login_screen.dart';
 import 'package:lojavirtual/screens/product/product_screen.dart';
@@ -43,6 +46,12 @@ class MyApp extends StatelessWidget {
           lazy: false,
           update: (_, userManager, cartManager) =>
               cartManager..updateUser(userManager),
+        ),
+        ChangeNotifierProxyProvider<UserManager, OrdersManager>(
+          create: (_) => OrdersManager(),
+          lazy: false,
+          update: (_, userManager, ordersManager) =>
+          ordersManager..updateUser(userManager.user),
         ),
         ChangeNotifierProxyProvider<UserManager, AdminUsersManager>(
           create: (_) => AdminUsersManager(),
@@ -79,6 +88,10 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => AddressScreen());
             case '/checkout':
               return MaterialPageRoute(builder: (_) => CheckoutScreen());
+            case '/confirmation':
+              return MaterialPageRoute(builder: (_) => ConfirmationScreen(
+                settings.arguments as Order
+              ));
             case '/select_product':
               return MaterialPageRoute(builder: (_) => SelectProductScreen());
             case '/edit_product':
