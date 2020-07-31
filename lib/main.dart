@@ -19,6 +19,8 @@ import 'package:lojavirtual/screens/select_product/select_product_screen.dart';
 import 'package:lojavirtual/screens/signup/signup_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'models/admin_orders_manager.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -59,6 +61,14 @@ class MyApp extends StatelessWidget {
           update: (_, userManager, adminUsersManager) =>
               adminUsersManager..updateUser(userManager),
         ),
+        ChangeNotifierProxyProvider<UserManager, AdminOrdersManager>(
+          create: (_) => AdminOrdersManager(),
+          lazy: false,
+          update: (_, userManager, adminOrdersManager) =>
+          adminOrdersManager..updateAdmin(
+              adminEnabled: userManager.adminEnabled
+          ),
+        )
       ],
       child: MaterialApp(
         title: 'Loja de Roupas',

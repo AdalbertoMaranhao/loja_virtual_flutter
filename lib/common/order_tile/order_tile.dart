@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/order.dart';
 
+import 'cancel_order_dialog.dart';
+import 'export_address_dialog.dart';
 import 'order_product_tile.dart';
 
 class OrderTile extends StatelessWidget {
 
-  const OrderTile(this.order);
+  const OrderTile(this.order,{this.showControls = false});
 
   final Order order;
+  final bool showControls;
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +43,12 @@ class OrderTile extends StatelessWidget {
                 ],
               ),
               Text(
-                'Entrege',
+                order.statusText,
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  color: primaryColor,
+                  color: order.status == Status.canceled
+                      ? Colors.red
+                      : primaryColor,
                   fontSize: 14,
                 ),
               ),
@@ -55,6 +60,41 @@ class OrderTile extends StatelessWidget {
               return OrderProductTile(e);
             }).toList(),
           ),
+          if(showControls && order.status != Status.canceled)
+            SizedBox(
+              height: 50,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: (){
+                      showDialog(context: context,
+                        builder: (_) => CancelOrderDialog(order)
+                      );
+                    },
+                    textColor: Colors.red,
+                    child: const Text('Cancelar'),
+                  ),
+                  FlatButton(
+                    onPressed: order.back,
+                    child: const Text('Recuar'),
+                  ),
+                  FlatButton(
+                    onPressed: order.advance,
+                    child: const Text('Avançar'),
+                  ),
+                  FlatButton(
+                    onPressed: (){
+                      showDialog(context: context,
+                          builder: (_) => ExportAddressDialog(order.address)
+                      );
+                    },
+                    textColor: primaryColor,
+                    child: const Text('Endereço'),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

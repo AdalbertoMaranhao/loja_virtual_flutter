@@ -72,8 +72,8 @@ class _CepInputFieldState extends State<CepInputField> {
             } : null,
             color: primaryColor,
             disabledColor: primaryColor.withAlpha(100),
-            child: const Text('Buscar CEP'),
             textColor: Colors.white,
+            child: const Text('Buscar CEP'),
           ),
         ],
       );
