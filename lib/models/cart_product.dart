@@ -5,7 +5,7 @@ import 'package:lojavirtual/models/product.dart';
 
 class CartProduct extends ChangeNotifier{
 
-  CartProduct.fromProduct(this.product){
+  CartProduct.fromProduct(this._product){
     productID = product.id;
     quantity = 1;
     size = product.selectedSize.name;
@@ -20,20 +20,24 @@ class CartProduct extends ChangeNotifier{
     firestore.document('products/$productID').get().then(
             (doc) {
               product = Product.fromDocument(doc);
-              notifyListeners();
             }
     );
   }
 
   final Firestore firestore = Firestore.instance;
 
-  Product product;
-
-
   String id;
   String productID;
   int quantity;
   String size;
+  num fixedPrice;
+
+  Product _product;
+  Product get product => _product;
+  set product(Product value){
+    _product = value;
+    notifyListeners();
+  }
 
   ItemSize get itemSize {
     if(product == null) return null;
@@ -54,6 +58,16 @@ class CartProduct extends ChangeNotifier{
       'size': size,
     };
   }
+
+  Map<String, dynamic> toOrderItemMap() {
+    return {
+      'pid': productID,
+      'quantity': quantity,
+      'size': size,
+      'fixedPrice': fixedPrice ?? unitPrice,
+    };
+  }
+
 
   bool stackable(Product product){
     return product.id == productID && product.selectedSize.name == size;
