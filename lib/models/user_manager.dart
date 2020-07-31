@@ -34,6 +34,11 @@ class UserManager extends ChangeNotifier {
     loading = false;
   }
 
+  void facebookLogin() {
+
+  }
+
+
   Future<void> signUP({User user, Function onFail, Function onSucess}) async {
     loading = true;
     try {
@@ -79,6 +84,7 @@ class UserManager extends ChangeNotifier {
   }
 
   bool get adminEnabled => user != null && user.admin;
+
 
 }
 

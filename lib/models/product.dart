@@ -14,7 +14,7 @@ class Product extends ChangeNotifier {
 
   StorageReference get storageRef => storage.ref().child('products').child(id);
 
-  Product({this.id, this.name, this.description, this.images, this.sizes}) {
+  Product({this.id, this.name, this.description, this.images, this.sizes, this.deleted = false}) {
     images = images ?? [];
     sizes = sizes ?? [];
   }
@@ -27,6 +27,8 @@ class Product extends ChangeNotifier {
     sizes = (document.data['sizes'] as List<dynamic>)
         .map((s) => ItemSize.fromMap(s as Map<String, dynamic>))
         .toList();
+
+    deleted = (document.data['deleted'] ?? false) as bool;
   }
 
   String id;
@@ -35,6 +37,7 @@ class Product extends ChangeNotifier {
   List<String> images;
   List<ItemSize> sizes;
 
+  bool deleted;
   List<dynamic> newImages;
 
   bool _loading = false;
@@ -63,13 +66,13 @@ class Product extends ChangeNotifier {
   }
 
   bool get hasStock {
-    return totalStock > 0;
+    return totalStock > 0 && !deleted;
   }
 
   num get basePrice {
     num lowest = double.infinity;
     for (final size in sizes) {
-      if (size.price < lowest && size.hasStock) {
+      if (size.price < lowest) {
         lowest = size.price;
       }
     }
@@ -95,6 +98,7 @@ class Product extends ChangeNotifier {
       'name': name,
       'description': description,
       'sizes': exportSizeList(),
+      'deleted': deleted,
     };
 
     if (id == null) {
@@ -120,7 +124,7 @@ class Product extends ChangeNotifier {
     }
 
     for(final image in images){
-      if(!newImages.contains(image)){
+      if(!newImages.contains(image) && image.contains('firebase')){
         try {
           final ref = await storage.getReferenceFromUrl(image);
           await ref.delete();
@@ -136,6 +140,10 @@ class Product extends ChangeNotifier {
     loading = false;
   }
 
+  void delete() {
+    firestoreRef.updateData({'deleted': true});
+  }
+
   Product clone() {
     return Product(
       id: id,
@@ -143,6 +151,8 @@ class Product extends ChangeNotifier {
       description: description,
       images: List.from(images),
       sizes: sizes.map((size) => size.clone()).toList(),
+      deleted: deleted,
     );
   }
+
 }

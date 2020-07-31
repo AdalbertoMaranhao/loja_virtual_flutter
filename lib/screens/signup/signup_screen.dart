@@ -89,50 +89,48 @@ class SignUpScreen extends StatelessWidget {
                       onSaved: (confirmedPass) => user.confirmedPassword = confirmedPass,
                     ),
                     const SizedBox(height: 16,),
-                    SizedBox(
-                      height: 44,
-                      child: RaisedButton(
-                        onPressed: userManager.loading ? null : (){
-                          if(formKey.currentState.validate()){
-                            formKey.currentState.save();
+                    RaisedButton(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      onPressed: userManager.loading ? null : (){
+                        if(formKey.currentState.validate()){
+                          formKey.currentState.save();
 
-                            if(user.password != user.confirmedPassword){
-                              scaffoldKey.currentState.showSnackBar(
-                                const SnackBar(
-                                  content: Text("Senhas não coiencidem!"),
-                                  backgroundColor: Colors.red,
-                                ),
-                              );
-                              return;
-                            }
-                            userManager.signUP(
-                                user: user,
-                                onSucess: (){
-                                  Navigator.of(context).pop();
-                                },
-                                onFail: (e){
-                                  scaffoldKey.currentState.showSnackBar(
-                                    SnackBar(
-                                      content: Text("Falha ao cadastrar: $e"),
-                                      backgroundColor: Colors.red,
-                                    ),
-                                  );
-                                }
+                          if(user.password != user.confirmedPassword){
+                            scaffoldKey.currentState.showSnackBar(
+                              const SnackBar(
+                                content: Text("Senhas não coiencidem!"),
+                                backgroundColor: Colors.red,
+                              ),
                             );
+                            return;
                           }
-                        },
-                        color: Theme.of(context).primaryColor,
-                        disabledColor: Theme.of(context).primaryColor.withAlpha(100),
-                        textColor: Colors.white,
-                        child: userManager.loading
-                        ? CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation(Colors.white),
-                            )
-                        : const Text(
-                          'Criar Conta',
-                          style: TextStyle(
-                              fontSize: 18
-                          ),
+                          userManager.signUP(
+                              user: user,
+                              onSucess: (){
+                                Navigator.of(context).pop();
+                              },
+                              onFail: (e){
+                                scaffoldKey.currentState.showSnackBar(
+                                  SnackBar(
+                                    content: Text("Falha ao cadastrar: $e"),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                              }
+                          );
+                        }
+                      },
+                      color: Theme.of(context).primaryColor,
+                      disabledColor: Theme.of(context).primaryColor.withAlpha(100),
+                      textColor: Colors.white,
+                      child: userManager.loading
+                      ? CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(Colors.white),
+                          )
+                      : const Text(
+                        'Criar Conta',
+                        style: TextStyle(
+                            fontSize: 15
                         ),
                       ),
                     )

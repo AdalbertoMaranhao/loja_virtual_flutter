@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/user_manager.dart';
+import 'package:lojavirtual/screens/product/components/size_widget.dart';
 import 'package:provider/provider.dart';
-
-import 'components/size_widget.dart';
 
 class ProductScreen extends StatelessWidget {
 
@@ -15,26 +14,24 @@ class ProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final primaryColor = Theme.of(context).primaryColor;
 
     return ChangeNotifierProvider.value(
       value: product,
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(product.name),
           centerTitle: true,
           actions: <Widget>[
             Consumer<UserManager>(
               builder: (_, userManager, __){
-                if(userManager.adminEnabled){
+                if(userManager.adminEnabled && !product.deleted){
                   return IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: (){
                       Navigator.of(context).pushReplacementNamed(
-                        '/edit_product',
-                        arguments: product,
+                          '/edit_product',
+                          arguments: product
                       );
                     },
                   );
@@ -42,16 +39,17 @@ class ProductScreen extends StatelessWidget {
                   return Container();
                 }
               },
-            ),
+            )
           ],
         ),
+        backgroundColor: Colors.white,
         body: ListView(
           children: <Widget>[
             AspectRatio(
               aspectRatio: 1,
               child: Carousel(
                 images: product.images.map((url){
-                  return Image.network(url);
+                  return NetworkImage(url);
                 }).toList(),
                 dotSize: 4,
                 dotSpacing: 15,
@@ -68,8 +66,8 @@ class ProductScreen extends StatelessWidget {
                   Text(
                     product.name,
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600
                     ),
                   ),
                   Padding(
@@ -85,7 +83,7 @@ class ProductScreen extends StatelessWidget {
                   Text(
                     'R\$ ${product.basePrice.toStringAsFixed(2)}',
                     style: TextStyle(
-                      fontSize: 27,
+                      fontSize: 22.0,
                       fontWeight: FontWeight.bold,
                       color: primaryColor,
                     ),
@@ -95,43 +93,58 @@ class ProductScreen extends StatelessWidget {
                     child: Text(
                       'Descrição',
                       style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500
                       ),
                     ),
                   ),
                   Text(
                     product.description,
                     style: const TextStyle(
-                      fontSize: 16
+                        fontSize: 16
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16, bottom: 8),
-                    child: Text(
-                      'Tamanhos',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                  if(product.deleted)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16, bottom: 8),
+                      child: Text(
+                        'Este produto não está mais disponível',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.red
+                        ),
                       ),
-                    ),
-                  ),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: product.sizes.map((s){
-                      return SizeWidget(size: s);
-                    }).toList(),
-                  ),
+                    )
+                  else
+                    ...[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16, bottom: 8),
+                        child: Text(
+                          'Tamanhos',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500
+                          ),
+                        ),
+                      ),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: product.sizes.map((s){
+                          return SizeWidget(size: s);
+                        }).toList(),
+                      ),
+                    ],
                   const SizedBox(height: 20,),
                   if(product.hasStock)
-                      Consumer2<UserManager, Product>(
+                    Consumer2<UserManager, Product>(
                       builder: (_, userManager, product, __){
                         return SizedBox(
                           height: 44,
                           child: RaisedButton(
                             onPressed: product.selectedSize != null ? (){
-                              if (userManager.isLoggedIn){
+                              if(userManager.isLoggedIn){
                                 context.read<CartManager>().addToCart(product);
                                 Navigator.of(context).pushNamed('/cart');
                               } else {
@@ -144,17 +157,15 @@ class ProductScreen extends StatelessWidget {
                               userManager.isLoggedIn
                                   ? 'Adicionar ao Carrinho'
                                   : 'Entre para Comprar',
-                              style: const TextStyle(
-                                fontSize: 18,
-                              ),
+                              style: const TextStyle(fontSize: 18),
                             ),
                           ),
                         );
                       },
-                    ),
+                    )
                 ],
               ),
-            ),
+            )
           ],
         ),
       ),
