@@ -59,22 +59,22 @@ class CheckoutScreen extends StatelessWidget {
                       onPressed: () {
                         if(formKey.currentState.validate()) {
                           debugPrint('Enviar');
-//                        checkoutManager.checkout(
-//                            onStockFail: () {
-//                              Navigator.of(context).popUntil(
-//                                      (route) => route.settings.name == '/cart'
-//                              );
-//                            },
-//                            onSuccess: (order) {
-//                              Navigator.of(context).popUntil(
-//                                      (route) => route.settings.name == '/'
-//                              );
-//                              Navigator.of(context).pushNamed(
-//                                '/confirmation',
-//                                arguments: order,
-//                              );
-//                            }
-//                        );
+                          checkoutManager.checkout(
+                              onStockFail: () {
+                                Navigator.of(context).popUntil(
+                                        (route) => route.settings.name == '/cart'
+                                );
+                              },
+                              onSuccess: (order) {
+                                Navigator.of(context).popUntil(
+                                        (route) => route.settings.name == '/'
+                                );
+                                Navigator.of(context).pushNamed(
+                                  '/confirmation',
+                                  arguments: order,
+                                );
+                              }
+                            );
                         }
                       },
                     ),
