@@ -51,9 +51,7 @@ class Store {
         'Dom: ${formattedPeriod(opening['sunday'])}';
   }
 
-  String get cleanPhone {
-    phone.replaceAll(RegExp(r"[^\d]"), "");
-  }
+  String get cleanPhone => phone.replaceAll(RegExp(r"[^\d]"), "");
 
   String formattedPeriod(Map<String, TimeOfDay> period) {
     if (period == null) return "Fechada";
