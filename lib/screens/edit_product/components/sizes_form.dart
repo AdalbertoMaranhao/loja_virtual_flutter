@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/limad/AndroidStudioProjects/loja_virtual/lib/common/custom_icon_button.dart';
 import 'package:lojavirtual/models/item_size.dart';
 import 'package:lojavirtual/models/product.dart';
 
+import '../../../common/custom_icon_button.dart';
 import 'edit_item_size.dart';
 
 class SizesForm extends StatelessWidget {

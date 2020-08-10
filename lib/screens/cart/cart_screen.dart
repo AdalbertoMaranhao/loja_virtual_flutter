@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/common/empty_card.dart';
 import 'package:lojavirtual/common/login_card.dart';
-import 'file:///C:/Users/limad/AndroidStudioProjects/loja_virtual/lib/common/price_card.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:provider/provider.dart';
 
+import '../../common/price_card.dart';
 import 'components/cart_tile.dart';
 
 class CartScreen extends StatelessWidget {
