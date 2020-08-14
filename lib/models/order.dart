@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:lojavirtual/models/address.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/cart_product.dart';
+import 'package:lojavirtual/services/cielo_payment.dart';
 
 enum Status {canceled, preparing, transporting, delivered}
 
@@ -26,6 +28,7 @@ class Order {
     date = doc.data['date'] as Timestamp;
 
     status = Status.values[doc.data['status'] as int];
+    payId = doc.data['payId'] as String;
   }
 
   final Firestore firestore = Firestore.instance;
@@ -33,6 +36,7 @@ class Order {
       firestore.collection('orders').document(orderId);
 
   String orderId;
+  String payId;
 
   List<CartProduct> items;
   num price;
@@ -57,6 +61,7 @@ class Order {
         'address': address.toMap(),
         'status': status.index,
         'date': Timestamp.now(),
+        'payId': payId,
       }
     );
   }
@@ -100,12 +105,17 @@ class Order {
     return null;
   }
 
-  void cancel() {
-    status = Status.canceled;
-    firestoreRef.updateData({'status': status.index});
+  Future<void> cancel() async {
+    try {
+      await CieloPayment().cancel(payId);
+
+      status = Status.canceled;
+      firestoreRef.updateData({'status': status.index});
+    } catch (e){
+      debugPrint('Erro ao cancelar');
+      return Future.error('Falha ao cancelar');
+    }
   }
-
-
 
 
 }

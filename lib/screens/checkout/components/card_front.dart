@@ -1,13 +1,15 @@
-import 'package:brasil_fields/brasil_fields.dart';
+import 'package:brasil_fields/formatter/cartao_bancario_input_formatter.dart';
+import 'package:brasil_fields/formatter/validade_cartao_input_formatter.dart';
 import 'package:credit_card_type_detector/credit_card_type_detector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lojavirtual/models/credit_card.dart';
 import 'package:lojavirtual/screens/checkout/components/card_text_field.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CardFront extends StatelessWidget {
 
-  CardFront({this.numberFocus, this.dateFocus, this.nameFocus, this.finished});
+  CardFront({this.numberFocus, this.dateFocus, this.nameFocus, this.finished, this.creditCard});
 
 
   final MaskTextInputFormatter dateFormatter = MaskTextInputFormatter(
@@ -19,6 +21,8 @@ class CardFront extends StatelessWidget {
   final FocusNode numberFocus;
   final FocusNode dateFocus;
   final FocusNode nameFocus;
+
+  final CreditCard creditCard;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,7 @@ class CardFront extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   CardTextField(
+                    initialValue: creditCard.number,
                     title: 'Número',
                     hint: '1111 2222 3333 4444',
                     bold: true,
@@ -57,13 +62,15 @@ class CardFront extends StatelessWidget {
                       dateFocus.requestFocus();
                     },
                     focusNode: numberFocus,
+                    onSaved: creditCard.setNumber,
                   ),
                   CardTextField(
+                    initialValue: creditCard.expirationDate,
                     title: 'Validade',
                     hint: '11/2023',
                     textInputType: TextInputType.number,
                     inputFormaters: [
-                      dateFormatter,
+                      dateFormatter
                     ],
                     validator: (date){
                       if(date.length != 7) return 'Inválido';
@@ -73,8 +80,10 @@ class CardFront extends StatelessWidget {
                       nameFocus.requestFocus();
                     },
                     focusNode: dateFocus,
+                    onSaved: creditCard.setExpirationDate,
                   ),
                   CardTextField(
+                    initialValue: creditCard.holder,
                     title: 'Nome do Titular',
                     hint: 'Maria Joaquina',
                     bold: true,
@@ -87,6 +96,7 @@ class CardFront extends StatelessWidget {
                       finished();
                     },
                     focusNode: nameFocus,
+                    onSaved: creditCard.setHolder,
                   ),
                 ],
               ),
