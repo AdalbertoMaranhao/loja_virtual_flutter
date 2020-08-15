@@ -1,5 +1,4 @@
 import 'package:brasil_fields/formatter/cartao_bancario_input_formatter.dart';
-import 'package:brasil_fields/formatter/validade_cartao_input_formatter.dart';
 import 'package:credit_card_type_detector/credit_card_type_detector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

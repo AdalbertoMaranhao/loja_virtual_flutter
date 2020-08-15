@@ -52,7 +52,7 @@ class CartTile extends StatelessWidget {
                         ),
                         Consumer<CartProduct>(
                           builder: (_, cartProduct, __){
-                            if(cartProduct.hasStock)
+                            if(cartProduct.hasStock) {
                               return Text(
                                 'R\$ ${cartProduct.unitPrice.toStringAsFixed(2)}',
                                 style: TextStyle(
@@ -61,7 +61,7 @@ class CartTile extends StatelessWidget {
                                     fontWeight: FontWeight.bold
                                 ),
                               );
-                            else
+                            } else {
                               return Text(
                                 'Sem estoque suficiente',
                                 style: TextStyle(
@@ -69,6 +69,7 @@ class CartTile extends StatelessWidget {
                                   fontSize: 12,
                                 ),
                               );
+                            }
                           },
                         )
                       ],

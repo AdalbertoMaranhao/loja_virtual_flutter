@@ -9,6 +9,8 @@ class CieloPayment {
 
   final CloudFunctions functions = CloudFunctions.instance;
 
+
+  // ignore: missing_return
   Future<String> authorize({CreditCard creditCard, num price,
     String orderId, User user}) async {
     try {

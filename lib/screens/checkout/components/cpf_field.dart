@@ -37,8 +37,9 @@ class CpfField extends StatelessWidget {
                 CpfInputFormatter(),
               ],
               validator: (cpf){
-                if(cpf.isEmpty) return 'Campo Obrigatório';
-                else if(!CPFValidator.isValid(cpf)) return 'CPF Inválido';
+                if(cpf.isEmpty) {
+                  return 'Campo Obrigatório';
+                } else if(!CPFValidator.isValid(cpf)) return 'CPF Inválido';
                 return null;
               },
               onSaved: userManager.user.setCpf,
