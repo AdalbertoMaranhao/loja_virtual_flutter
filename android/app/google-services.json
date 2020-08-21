@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "669855869593-4tposen2hogg3rqpht41ba4mbfs32c2j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.adalberto.lojavirtual",
+            "certificate_hash": "58896c4e8ae69031018d43fd8b074ceaa2e9efd1"
+          }
+        },
+        {
           "client_id": "669855869593-f3eh6tqq7tc38goqka6jvjf26rgrh08a.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -30,6 +38,13 @@
             {
               "client_id": "669855869593-f3eh6tqq7tc38goqka6jvjf26rgrh08a.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "669855869593-tb8ubrjhqfle25ojnjst1ebems16be1s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dev.adalberto.lojavirtual"
+              }
             }
           ]
         }

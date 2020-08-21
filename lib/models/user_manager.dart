@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:lojavirtual/helpers/firebase_erros.dart';
 import 'package:lojavirtual/models/user.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class UserManager extends ChangeNotifier {
 
@@ -76,6 +77,41 @@ class UserManager extends ChangeNotifier {
     loading = false;
 
   }
+
+  Future<void> googleLogin({Function onFail, Function onSuccess}) async {
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      scopes: [
+        'email',
+        'profile',
+        'openid',
+      ],
+    );
+
+    loading = true;
+
+    try {
+      await googleSignIn.signIn();
+      final result = googleSignIn.currentUser;
+      print(result);
+      user = User(
+          id: result.id,
+          name: result.displayName,
+          email: result.email
+      );
+
+      await user.saveData();
+      user.saveToken();
+      onSuccess();
+      loading = false;
+
+    } catch (e){
+      onFail(e.toString());
+      print(e);
+      loading = false;
+    }
+
+  }
+
 
 
   Future<void> signUP({User user, Function onFail, Function onSucess}) async {

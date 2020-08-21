@@ -57,6 +57,7 @@ dependencies:
   cpf_cnpj_validator: ^1.0.5
   firebase_messaging: ^6.0.16
   flushbar: ^1.10.4
+  google_sign_in: ^4.5.1
 
 dev_dependencies:
   flutter_test:

@@ -2,7 +2,8 @@
 <resources>
     <string name="app_name">Loja Virtual</string>
 
-    <string name="facebook_app_id">330939494607258</string>
+    <string name="facebook_app_id">643915129572366</string>
 
-    <string name="fb_login_protocol_scheme">fb330939494607258</string>
+    <string name="fb_login_protocol_scheme">fb643915129572366</string>
+
 </resources>

@@ -111,7 +111,7 @@ class LoginScreen extends StatelessWidget {
                         disabledColor: Theme.of(context).primaryColor.withAlpha(100),
                         textColor: Colors.white,
                         child: userManager.loading ?
-                        CircularProgressIndicator(
+                        const CircularProgressIndicator(
                          valueColor: AlwaysStoppedAnimation(Colors.white),
                         ):
                         const Text(
@@ -121,7 +121,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SignInButton(
+                      /*SignInButton(
                         Buttons.Facebook,
                         text: 'Entrar com Facebook',
                         onPressed: (){
@@ -140,6 +140,25 @@ class LoginScreen extends StatelessWidget {
                           );
                         },
                       ),
+                      SignInButton(
+                        Buttons.Google,
+                        text: 'Entrar com Google',
+                        onPressed: (){
+                          userManager.googleLogin(
+                            onFail: (e){
+                              scaffoldKey.currentState.showSnackBar(
+                                SnackBar(
+                                  content: Text("Falha ao entrar: $e"),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            },
+                            onSuccess: (){
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        },
+                      ),*/
                     ],
                   );
                 },
